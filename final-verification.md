@@ -51,3 +51,4 @@ npx playwright test
 6. Optionally run `npm run e2e` after starting the server manually to verify the full E2E flow and zero axe violations.
 
 All criteria from the PRD are satisfied. 🎉
+
