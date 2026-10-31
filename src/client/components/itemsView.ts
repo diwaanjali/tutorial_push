@@ -7,6 +7,7 @@ import { filterAndSortCampusItems } from '../logic/filters.ts';
 import { storageService } from '../storage/localStorage.ts';
 import { openPreviewModal } from './previewModal.ts';
 import { showToast, announceToScreenReader } from './toast.ts';
+import { renderCalendarView } from './calendarView.ts';
 
 export interface ItemsViewCallbacks {
   onItemsChanged: () => void;
@@ -170,6 +171,16 @@ export function initItemsView(callbacks: ItemsViewCallbacks): void {
 
     const visibleItems = filterAndSortCampusItems(allItems, filterState, profile);
     const clashMap = detectClashes(allItems);
+
+    if (callbacks.currentView === 'calendar') {
+      const calendar = renderCalendarView(visibleItems, {
+        onEventModified: () => {
+          callbacks.onItemsChanged();
+        }
+      });
+      listContainer.appendChild(calendar);
+      return;
+    }
 
     if (visibleItems.length === 0) {
       const emptyState = el(

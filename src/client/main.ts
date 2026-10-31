@@ -1,4 +1,5 @@
 import { initHeader } from './components/header.ts';
+import { initAttentionBanner } from './components/attention.ts';
 import { initAddPanel } from './components/addPanel.ts';
 import { initItemsView } from './components/itemsView.ts';
 import { storageService } from './storage/localStorage.ts';
@@ -7,7 +8,9 @@ import { showToast } from './components/toast.ts';
 let currentViewMode: 'list' | 'calendar' = 'list';
 
 function refreshAllViews(): void {
-  // Re-render items view and attention banner
+  // Re-render attention banner and items view
+  initAttentionBanner();
+
   initItemsView({
     currentView: currentViewMode,
     onViewToggled: (newView) => {
@@ -37,7 +40,10 @@ function initApp(): void {
     }
   });
 
-  // 2. Add Panel
+  // 2. Attention Banner
+  initAttentionBanner();
+
+  // 3. Add Panel
   initAddPanel({
     onItemSaved: (item) => {
       storageService.addItem(item);
@@ -45,7 +51,7 @@ function initApp(): void {
     }
   });
 
-  // 3. Items View
+  // 4. Items View
   refreshAllViews();
 
   console.log('Campus Pulse client initialized cleanly.');
