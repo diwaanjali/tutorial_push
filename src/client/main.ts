@@ -4,6 +4,7 @@ import { initAddPanel } from './components/addPanel.ts';
 import { initItemsView } from './components/itemsView.ts';
 import { storageService } from './storage/localStorage.ts';
 import { showToast } from './components/toast.ts';
+import { openWeeklyDigestModal } from './components/digestModal.ts';
 
 let currentViewMode: 'list' | 'calendar' = 'list';
 
@@ -31,13 +32,17 @@ function initApp(): void {
   // 1. Header with callbacks
   initHeader({
     onOpenDigest: () => {
-      const digestEvent = new CustomEvent('campuspulse:open-digest');
-      window.dispatchEvent(digestEvent);
+      openWeeklyDigestModal();
     },
     onOpenProfile: () => {
       const profileEvent = new CustomEvent('campuspulse:open-profile');
       window.dispatchEvent(profileEvent);
     }
+  });
+
+  // Listen for custom open digest event
+  window.addEventListener('campuspulse:open-digest', () => {
+    openWeeklyDigestModal();
   });
 
   // 2. Attention Banner
