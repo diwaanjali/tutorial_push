@@ -33,3 +33,4 @@ export const STORAGE_KEY_THEME = 'campusPulse.theme.v1';
 export const STORAGE_KEY_TEXT_SIZE = 'campusPulse.textSize.v1';
 
 export const TIMEZONE = 'Asia/Kolkata';
+

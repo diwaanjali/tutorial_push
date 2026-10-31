@@ -118,3 +118,4 @@ export function initHeader(callbacks: HeaderCallbacks): void {
   container.appendChild(brand);
   container.appendChild(controls);
 }
+

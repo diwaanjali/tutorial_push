@@ -249,3 +249,4 @@ After each milestone: run lint, typecheck and tests, and fix failures before mov
 - README, `SECURITY.md`, `.env.example` and `LICENSE` are present.
 - No secrets anywhere in git history.
 - The app still works in degraded mode (offline parser and template digest) when Gemini is unavailable.
+

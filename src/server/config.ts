@@ -19,3 +19,4 @@ export function loadConfig(): ServerConfig {
 }
 
 export const config = loadConfig();
+

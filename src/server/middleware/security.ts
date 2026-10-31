@@ -33,3 +33,4 @@ export const apiRateLimiter = rateLimit({
   legacyHeaders: false,
   message: { error: 'Too many requests. Please try again in a minute.' }
 });
+

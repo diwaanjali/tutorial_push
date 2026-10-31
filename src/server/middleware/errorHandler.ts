@@ -26,3 +26,4 @@ export function errorHandler(
     error: status === 500 ? 'An unexpected server error occurred.' : err.message
   });
 }
+

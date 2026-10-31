@@ -73,6 +73,7 @@ export function initAddPanel(callbacks: AddPanelCallbacks): void {
 
   // Voice Speech Recognition button (PRD Bonus 3)
   let voiceBtn: HTMLButtonElement | null = null;
+  let voiceLangSelect: HTMLSelectElement | null = null;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
 
@@ -90,15 +91,28 @@ export function initAddPanel(callbacks: AddPanelCallbacks): void {
     } | null = null;
     let isListening = false;
 
+    voiceLangSelect = el(
+      'select',
+      {
+        id: 'voice-lang-select',
+        className: 'form-select',
+        style: 'min-height: 44px; padding: 0.2rem 0.5rem; font-size: 0.85rem;',
+        'aria-label': 'Select speech recognition language'
+      },
+      el('option', { value: 'en-IN' }, 'EN (Hinglish)'),
+      el('option', { value: 'hi-IN' }, 'HI (Hindi)')
+    ) as HTMLSelectElement;
+
     voiceBtn = el(
       'button',
       {
         type: 'button',
+        id: 'voice-btn',
         className: 'btn btn-secondary',
-        'aria-label': 'Voice input in English or Hindi',
+        'aria-label': 'Voice input',
         title: 'Voice input (Web Speech API)'
       },
-      '🎤 Voice'
+      '🎤 Speak'
     ) as HTMLButtonElement;
 
     voiceBtn.addEventListener('click', () => {
@@ -110,7 +124,7 @@ export function initAddPanel(callbacks: AddPanelCallbacks): void {
       try {
         const rec = new SpeechRecognition();
         recognition = rec;
-        rec.lang = 'en-IN'; // Default to Indian English, also supports Hinglish
+        rec.lang = voiceLangSelect?.value || 'en-IN';
         rec.interimResults = false;
         rec.continuous = false;
 
@@ -120,7 +134,7 @@ export function initAddPanel(callbacks: AddPanelCallbacks): void {
             voiceBtn.textContent = '🔴 Listening...';
             voiceBtn.classList.add('btn-danger');
           }
-          announceToScreenReader('Listening for speech...');
+          announceToScreenReader(`Listening for speech in ${rec.lang === 'hi-IN' ? 'Hindi' : 'English/Hinglish'}...`);
         };
 
         rec.onresult = (e: { results: Array<Array<{ transcript: string }>> }) => {
@@ -139,7 +153,7 @@ export function initAddPanel(callbacks: AddPanelCallbacks): void {
         rec.onend = () => {
           isListening = false;
           if (voiceBtn) {
-            voiceBtn.textContent = '🎤 Voice';
+            voiceBtn.textContent = '🎤 Speak';
             voiceBtn.classList.remove('btn-danger');
           }
           announceToScreenReader('Microphone closed.');
@@ -210,7 +224,8 @@ export function initAddPanel(callbacks: AddPanelCallbacks): void {
     'div',
     { className: 'input-actions-left' },
     sampleBtn,
-    voiceBtn
+    voiceBtn,
+    voiceLangSelect
   );
 
   const actions = el(

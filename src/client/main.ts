@@ -5,6 +5,7 @@ import { initItemsView } from './components/itemsView.ts';
 import { storageService } from './storage/localStorage.ts';
 import { showToast } from './components/toast.ts';
 import { openWeeklyDigestModal } from './components/digestModal.ts';
+import { openProfileModal } from './components/profileModal.ts';
 
 let currentViewMode: 'list' | 'calendar' = 'list';
 
@@ -35,14 +36,25 @@ function initApp(): void {
       openWeeklyDigestModal();
     },
     onOpenProfile: () => {
-      const profileEvent = new CustomEvent('campuspulse:open-profile');
-      window.dispatchEvent(profileEvent);
+      openProfileModal({
+        onProfileUpdated: () => {
+          refreshAllViews();
+        }
+      });
     }
   });
 
-  // Listen for custom open digest event
+  // Listen for custom events
   window.addEventListener('campuspulse:open-digest', () => {
     openWeeklyDigestModal();
+  });
+
+  window.addEventListener('campuspulse:open-profile', () => {
+    openProfileModal({
+      onProfileUpdated: () => {
+        refreshAllViews();
+      }
+    });
   });
 
   // 2. Attention Banner

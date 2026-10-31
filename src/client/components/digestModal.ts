@@ -167,3 +167,4 @@ export async function openWeeklyDigestModal(triggerElement?: HTMLElement | null)
     announceToScreenReader('Weekly digest is ready.');
   }
 }
+

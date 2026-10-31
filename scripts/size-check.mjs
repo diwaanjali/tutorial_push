@@ -40,3 +40,4 @@ if (totalBytes > MAX_BYTES) {
   console.log(`✅ PASSED: Repo size is safely within the 5 MB limit.`);
   process.exit(0);
 }
+

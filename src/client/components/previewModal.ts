@@ -362,3 +362,4 @@ export function openPreviewModal(options: PreviewModalOptions): void {
   cleanupFocusTrap = setupFocusTrap(dialog, closeModal);
   announceToScreenReader(isEdit ? 'Edit item dialog opened' : 'Review extracted item dialog opened');
 }
+
